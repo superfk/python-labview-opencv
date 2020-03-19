@@ -47,6 +47,8 @@ def detect_zbar(source_path, output_path):
         # find the barcodes in the image and decode each of the barcodes
         barcodes = pyzbar.decode(image)
         # loop over the detected barcodes
+        barcodeData = ''
+        found = 0
         for barcode in barcodes:
             # extract the bounding box location of the barcode and draw the
             # bounding box surrounding the barcode on the image
@@ -64,8 +66,9 @@ def detect_zbar(source_path, output_path):
             print("[INFO] Found {} barcode: {}".format(barcodeType, barcodeData))
         # show the output image
         cv2.imwrite(output_path,image)
-        found = 1
-        barcodeData = barcodeData
+        if barcodeData != '':
+            found = 1
+            barcodeData = barcodeData
     except:
         message = "Internal Error: {}".format(e)
         print(message)
@@ -82,6 +85,8 @@ def detect_zbar_numpy(source_img_list, output_path):
         # find the barcodes in the image and decode each of the barcodes
         barcodes = pyzbar.decode(image)
         # loop over the detected barcodes
+        barcodeData = ''
+        found = 0
         for barcode in barcodes:
             # extract the bounding box location of the barcode and draw the
             # bounding box surrounding the barcode on the image
@@ -99,8 +104,9 @@ def detect_zbar_numpy(source_img_list, output_path):
             print("[INFO] Found {} barcode: {}".format(barcodeType, barcodeData))
         # show the output image
         cv2.imwrite(output_path,image)
-        found = 1
-        barcodeData = barcodeData
+        if barcodeData != '':
+            found = 1
+            barcodeData = barcodeData
     except Exception as e:
         message = "Internal Error: {}".format(e)
         print(message)
@@ -115,5 +121,5 @@ def debug(source_img_list, output_path):
     return msg
 
 if __name__ == "__main__":
-    ret = detect_zbar_numpy("t3.png", "decode.png")
+    ret = detect_zbar("test.png", "decode.png")
     print(ret)
